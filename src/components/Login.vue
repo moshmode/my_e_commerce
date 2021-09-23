@@ -9,8 +9,8 @@
       <div class="login_form">
         <el-form ref="loginFormRef" :model="loginData" :rules="login_rules">
 
-          <el-form-item prop="username">
-            <el-input v-model="loginData.username" prefix-icon="el-icon-user" placeholder="Please input your username"
+          <el-form-item prop="name">
+            <el-input v-model="loginData.name" prefix-icon="el-icon-user" placeholder="Please input your username"
             ></el-input>
           </el-form-item>
 
@@ -37,18 +37,18 @@ export default {
   data() {
     return {
       loginData: {
-        username: '',
-        password: ''
+        name: 'mosh',
+        password: 'mode'
       },
       login_rules: {
 
-        username: [
+        name: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
           {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
         ],
         password: [
           {required: true, message: '请输入密码', trigger: 'blur'},
-          {min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur'}
+          {min: 1, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur'}
         ]
       }
 
@@ -64,10 +64,20 @@ export default {
             if (!valid)
               return;
             this.$http({
-              url: 'http://localhost:8080/user/check',
+              url: 'http://localhost:8080/user/login',
               method: 'POST',
               params: this.loginData
-            }).then(respose => (console.log(respose)))
+            }).then(
+                response => {
+                  if (response.status !== 200 || response.data.message != null) {
+                    return this.$message.error(response.data.message)
+                  }
+                  window.sessionStorage.setItem('token', response.data.token)
+                  this.$message.success("login successfully!")
+                  this.$router.push('/home')
+
+                }
+            )
           }
       )
     }

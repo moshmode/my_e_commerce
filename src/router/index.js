@@ -1,7 +1,12 @@
 import router from "vue-router";
 import Login from "@/components/Login";
+import Home from "@/components/Home";
+import Users from "@/view/user/Users";
+import Welcome from "@/view/welcome/Welcome";
+import RightList from "@/view/right/RightList";
+import RoleList from "@/view/right/RoleList";
 
-export default new router({
+const default_router = new router({
 
     routes: [
         {
@@ -11,7 +16,41 @@ export default new router({
         {
             path: '/login',
             component: Login
+        },
+        {
+            path: '/home',
+            component: Home,
+            redirect: '/welcome',
+            children: [
+                {
+                    path: '/welcome',
+                    component: Welcome
+                },
+                {
+                    path: '/userList',
+                    component: Users
+                },
+                {
+                    path: '/rightList',
+                    component: RightList
+                },
+                {
+                    path: '/roleList',
+                    component: RoleList
+                }
+            ]
         }
     ]
-
 })
+
+default_router.beforeEach((to, from, next) => {
+    //to: will be visited
+    // from: where is come from
+    //next is a function: indicate release
+    if (to.path === '/login') return next()
+    const tokenStr = window.sessionStorage.getItem('token')
+    if (!tokenStr) return next('/login')
+    next()
+})
+
+export default default_router
