@@ -8,12 +8,18 @@ import './assets/global.css'
 import axios from "axios";
 
 Vue.config.productionTip = false
+
 Vue.use(VueRouter)
-Vue.use(ElementUI);
-Vue.prototype.$http=axios
+Vue.use(ElementUI)
+
+axios.interceptors.request.use(config => {
+    config.headers.token = window.sessionStorage.getItem('token')
+    return config
+})
+Vue.prototype.$http = axios
 
 
 new Vue({
-  render: h => h(App),
-  router
+    render: h => h(App),
+    router
 }).$mount('#app')
