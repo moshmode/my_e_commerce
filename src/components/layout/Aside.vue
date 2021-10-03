@@ -63,8 +63,11 @@ export default {
   mounted() {
     this.$nextTick(function () {
       this.$http({
-        url: 'http://localhost:8080/user/menu',
-        method: 'GET'
+        url: 'http://localhost:8080/roleRight/listRoleRight',
+        method: 'GET',
+        params: {
+          roleId: 1
+        }
       }).then(response => {
         this.menuList = response.data
       })
