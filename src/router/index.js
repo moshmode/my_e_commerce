@@ -5,6 +5,8 @@ import Users from "@/view/user/Users";
 import Welcome from "@/view/welcome/Welcome";
 import RightList from "@/view/right/RightList";
 import RoleList from "@/view/right/RoleList";
+import GoodList from "@/view/good/GoodList";
+import OrderList from "@/view/order/OrderList";
 
 const default_router = new router({
 
@@ -37,6 +39,14 @@ const default_router = new router({
                 {
                     path: '/roleList',
                     component: RoleList
+                },
+                {
+                    path: '/goodsList',
+                    component: GoodList
+                },
+                {
+                    path: '/ordersList',
+                    component: OrderList
                 }
             ]
         }

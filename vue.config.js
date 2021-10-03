@@ -8,7 +8,8 @@ module.exports = {
         //       changeOrigin: true
         //    }
         // }
-        proxy: 'http://124.71.71.18:8000'
+        // proxy: 'http://124.71.71.18:8000'
+        proxy: 'http://localhost:8000',
 
     }
 

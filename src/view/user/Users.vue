@@ -6,7 +6,7 @@
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-card class="box-card">
+    <el-card class="user-card">
 
 
       <el-row :gutter="20">
@@ -157,7 +157,7 @@ export default {
 
     listUser() {
       this.$http({
-        url: 'http://localhost:8080/user/list',
+        url: 'http://localhost:8080/user/listUser',
         method: 'GET',
         params: this.pageParams
       }).then(response => {
@@ -181,14 +181,14 @@ export default {
     addUser() {
       this.dialogFormVisible = false
       this.$http({
-        url: 'http://localhost:8080/user/add',
+        url: 'http://localhost:8080/user/addUser',
         method: 'POST',
         params: this.user
       }).then(response => {
         if (response.status === 200 || response.data.message == null) {
           this.$message.success('add successfully')
           this.listUser()
-          this.getCount()
+          this.count++;
           return
         }
         this.$message.error(response.data.message)
@@ -203,7 +203,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: 'http://localhost:8080/user/delete',
+          url: 'http://localhost:8080/user/deleteUser',
           method: 'GET',
           params: {
             id: id
@@ -212,7 +212,7 @@ export default {
           if (response.status === 200 || response.data.message == null) {
             this.$message.success('delete successfully')
             this.listUser()
-            this.getCount()
+            this.count--;
             return
           }
           this.$message.error(response.data.message)
@@ -234,7 +234,7 @@ export default {
     updateUser(row) {
       this.dialogFormVisible = false
       this.$http({
-        url: 'http://localhost:8080/user/update',
+        url: 'http://localhost:8080/user/editUser',
         method: 'POST',
         params: row
       }).then(response => {
@@ -274,7 +274,7 @@ export default {
 
 <style scoped>
 
-.box-card {
+.user-card {
   width: 100%;
   margin-top: 20px;
 }
@@ -283,5 +283,6 @@ export default {
   margin-top: 15px;
   font-size: 12px;
 }
+
 
 </style>
